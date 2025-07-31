@@ -1,13 +1,339 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Namburu College Tiffin Ordering System</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading" class="loading-screen">
+            <div class="loading-spinner"></div>
+            <p>Loading Tiffin Menu...</p>
+        </div>
+
+        <!-- Main App Container -->
+        <div id="main-app" class="app-container" style="display: none;">
+            
+            <!-- Menu Display Section -->
+            <section id="menu-section" class="section active">
+                <div class="container">
+                    <!-- Header -->
+                    <div class="header">
+                        <h1><i class="fas fa-utensils"></i> Namburu College Tiffin Service</h1>
+                        <p class="subtitle">Fresh, hot breakfast delivered to your canteen</p>
+                        
+                        <!-- Time Status -->
+                        <div id="time-status" class="time-status">
+                            <i class="fas fa-clock"></i>
+                            <span id="time-remaining">Calculating...</span>
+                        </div>
+                        
+                        <!-- Pickup Info -->
+                        <div class="pickup-info">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span><strong>Pickup Time:</strong> Big Break (8:50 - 9:20 AM)</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span><strong>Order Cutoff:</strong> 7:10 AM daily</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Menu Categories -->
+                    <div class="menu-grid">
+                        <!-- Dosa Category -->
+                        <div class="menu-category">
+                            <h3><i class="fas fa-bread-slice"></i> Dosa</h3>
+                            <div class="menu-items">
+                                <div class="menu-item" data-id="plain-dosa" data-name="Plain Dosa" data-price="23">
+                                    <div class="item-info">
+                                        <h4>Plain Dosa</h4>
+                                        <p class="price">₹23</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('plain-dosa', 'Plain Dosa', 23)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="menu-item" data-id="onion-dosa" data-name="Onion Dosa" data-price="23">
+                                    <div class="item-info">
+                                        <h4>Onion Dosa</h4>
+                                        <p class="price">₹23</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('onion-dosa', 'Onion Dosa', 23)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="menu-item" data-id="egg-dosa" data-name="Egg Dosa" data-price="23">
+                                    <div class="item-info">
+                                        <h4>Egg Dosa</h4>
+                                        <p class="price">₹23</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('egg-dosa', 'Egg Dosa', 23)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="menu-item" data-id="masala-dosa" data-name="Masala Dosa" data-price="23">
+                                    <div class="item-info">
+                                        <h4>Masala Dosa</h4>
+                                        <p class="price">₹23</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('masala-dosa', 'Masala Dosa', 23)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Idly Category -->
+                        <div class="menu-category">
+                            <h3><i class="fas fa-circle"></i> Idly</h3>
+                            <div class="menu-items">
+                                <div class="menu-item" data-id="2-idlys" data-name="2 Idlys" data-price="13">
+                                    <div class="item-info">
+                                        <h4>2 Idlys</h4>
+                                        <p class="price">₹13</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('2-idlys', '2 Idlys', 13)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="menu-item" data-id="4-idlys" data-name="4 Idlys" data-price="23">
+                                    <div class="item-info">
+                                        <h4>4 Idlys</h4>
+                                        <p class="price">₹23</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('4-idlys', '4 Idlys', 23)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Others Category -->
+                        <div class="menu-category">
+                            <h3><i class="fas fa-cookie-bite"></i> Others</h3>
+                            <div class="menu-items">
+                                <div class="menu-item" data-id="vada" data-name="Vada" data-price="13">
+                                    <div class="item-info">
+                                        <h4>Vada</h4>
+                                        <p class="price">₹13</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('vada', 'Vada', 13)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="menu-item" data-id="mysore-bonda" data-name="Mysore Bonda" data-price="13">
+                                    <div class="item-info">
+                                        <h4>Mysore Bonda</h4>
+                                        <p class="price">₹13</p>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart('mysore-bonda', 'Mysore Bonda', 13)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cart Summary -->
+                    <div id="cart-summary" class="cart-summary" style="display: none;">
+                        <h3><i class="fas fa-shopping-cart"></i> Your Order</h3>
+                        <div id="cart-items"></div>
+                        <div class="cart-total">
+                            <strong>Total: ₹<span id="cart-total">0</span></strong>
+                        </div>
+                        <button id="proceed-btn" class="btn btn-primary" onclick="showOrderForm()">
+                            Proceed to Order <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Order Form Section -->
+            <section id="order-section" class="section">
+                <div class="container">
+                    <div class="form-container">
+                        <h2><i class="fas fa-user"></i> Student Information</h2>
+                        
+                        <form id="order-form">
+                            <div class="form-group">
+                                <label for="student-name">
+                                    <i class="fas fa-user"></i> Full Name
+                                </label>
+                                <input type="text" id="student-name" required placeholder="Enter your full name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="roll-number">
+                                    <i class="fas fa-id-card"></i> Roll Number
+                                </label>
+                                <input type="text" id="roll-number" required placeholder="Enter your roll number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="branch">
+                                    <i class="fas fa-graduation-cap"></i> Branch
+                                </label>
+                                <select id="branch" required onchange="assignPickupSpot()">
+                                    <option value="">Select your branch</option>
+                                    <option value="Computer Science Engineering">Computer Science Engineering</option>
+                                    <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
+                                    <option value="Electrical & Electronics Engineering">Electrical & Electronics Engineering</option>
+                                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                    <option value="Civil Engineering">Civil Engineering</option>
+                                    <option value="Information Technology">Information Technology</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">
+                                    <i class="fas fa-phone"></i> Phone Number
+                                </label>
+                                <input type="tel" id="phone" required placeholder="Enter your phone number">
+                            </div>
+
+                            <!-- Pickup Spot -->
+                            <div class="pickup-selection">
+                                <h3><i class="fas fa-map-marker-alt"></i> Pickup Location</h3>
+                                <div class="pickup-options">
+                                    <button type="button" class="pickup-btn" data-spot="A" onclick="selectPickupSpot('A')">
+                                        <i class="fas fa-store"></i>
+                                        <span>Canteen A</span>
+                                    </button>
+                                    <button type="button" class="pickup-btn" data-spot="B" onclick="selectPickupSpot('B')">
+                                        <i class="fas fa-store"></i>
+                                        <span>Canteen B</span>
+                                    </button>
+                                </div>
+                                <p class="pickup-time">
+                                    <i class="fas fa-clock"></i>
+                                    <strong>Pickup Time: Big Break (8:50 - 9:20 AM)</strong>
+                                </p>
+                            </div>
+
+                            <!-- Order Summary in Form -->
+                            <div class="order-summary">
+                                <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                                <div id="form-cart-items"></div>
+                                <div class="summary-total">
+                                    <strong>Total Amount: ₹<span id="form-total">0</span></strong>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="showMenuSection()">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="proceedToPayment()">
+                                    Proceed to Payment <i class="fas fa-credit-card"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payment Section -->
+            <section id="payment-section" class="section">
+                <div class="container">
+                    <div class="payment-container">
+                        <h2><i class="fas fa-credit-card"></i> Payment</h2>
+                        
+                        <div class="payment-summary">
+                            <h3><i class="fas fa-file-invoice"></i> Order Summary</h3>
+                            <div class="summary-details">
+                                <p><strong>Student:</strong> <span id="payment-name"></span></p>
+                                <p><strong>Pickup:</strong> Canteen <span id="payment-pickup"></span></p>
+                                <p><strong>Time:</strong> Big Break (8:50 - 9:20 AM)</p>
+                            </div>
+                            <div class="payment-total">
+                                <h3>Total: ₹<span id="payment-total">0</span></h3>
+                            </div>
+                        </div>
+
+                        <div class="payment-notice">
+                            <div class="notice-header">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Payment Integration Required</span>
+                            </div>
+                            <p>To complete the payment integration, you'll need to set up your Razorpay account and add your API keys. Visit the setup guide for detailed instructions.</p>
+                        </div>
+
+                        <div class="payment-actions">
+                            <button class="btn btn-success btn-large" onclick="processPayment()">
+                                <i class="fas fa-lock"></i>
+                                Pay ₹<span id="pay-amount">0</span> with Razorpay
+                            </button>
+                            <button class="btn btn-secondary" onclick="showOrderForm()">
+                                <i class="fas fa-arrow-left"></i> Back to Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Confirmation Section -->
+            <section id="confirmation-section" class="section">
+                <div class="container">
+                    <div class="confirmation-container">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2>Order Confirmed!</h2>
+                        
+                        <div class="confirmation-details">
+                            <h3><i class="fas fa-receipt"></i> Order Details</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <strong>Student:</strong> <span id="conf-name"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Roll Number:</strong> <span id="conf-roll"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Branch:</strong> <span id="conf-branch"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Phone:</strong> <span id="conf-phone"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="order-items">
+                                <h4>Items Ordered</h4>
+                                <div id="conf-items"></div>
+                                <div class="conf-total">
+                                    <strong>Total Paid: ₹<span id="conf-total">0</span></strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pickup-instructions">
+                            <div class="instruction-header">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Pickup Instructions</span>
+                            </div>
+                            <div class="instruction-details">
+                                <p><strong>Location:</strong> Canteen <span id="conf-pickup"></span></p>
+                                <p><strong>Time:</strong> Big Break (8:50 - 9:20 AM)</p>
+                                <p class="instruction-note">Please show this confirmation to collect your order</p>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="placeNewOrder()">
+                            <i class="fas fa-plus"></i> Place Another Order
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
