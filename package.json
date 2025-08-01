@@ -4,8 +4,8 @@
   "description": "Namburu College Tiffin Ordering System",
   "main": "index.html",
   "scripts": {
-    "start": "python -m http.server 3000",
-    "dev": "python -m http.server 3000"
+    "start": "npx serve -s . -l 3000",
+    "dev": "npx serve -s . -l 3000"
   },
   "keywords": ["tiffin", "ordering", "college", "static"],
   "author": "",
