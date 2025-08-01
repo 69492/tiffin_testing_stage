@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function checkOrderingTime() {
     const now = new Date();
     const cutoffTime = new Date();
-    cutoffTime.setHours(7, 10, 0, 0);
+    cutoffTime.setHours(7, 25, 0, 0);
     
     const timeStatus = document.getElementById('time-status');
     const timeRemaining = document.getElementById('time-remaining');
@@ -92,7 +92,7 @@ function showSection(sectionId) {
 // Cart Management
 function addToCart(id, name, price) {
     if (isOrderingClosed) {
-        alert('Sorry, ordering is closed for today. Please try again tomorrow before 7:10 AM.');
+        alert('Sorry, ordering is closed for today. Please try again tomorrow before 7:25 AM.');
         return;
     }
     
